@@ -3,6 +3,13 @@ module LinkedIn
 
     module UpdateMethods
 
+      # job methods -- job is a hash.
+      def job_post(job_xml)
+        # FIXME: make sure this is getting the v1 bit, as in: http://api.linkedin.com/v1/jobs
+        path = "/jobs"
+        post(path, job_xml, 'Content-Type':'text/xml')
+      end
+
       def add_share(share)
         path = "/people/~/shares"
         defaults = {:visibility => {:code => "anyone"}}
@@ -45,13 +52,13 @@ module LinkedIn
 
       def send_message(subject, body, recipient_paths)
         path = "/people/~/mailbox"
-      
+
         message = {
-            'subject' => subject, 
+            'subject' => subject,
             'body' => body,
             'recipients' => {
-                'values' => recipient_paths.map do |profile_path| 
-                  { 'person' => { '_path' => "/people/#{profile_path}" } } 
+                'values' => recipient_paths.map do |profile_path|
+                  { 'person' => { '_path' => "/people/#{profile_path}" } }
                 end
             }
         }
