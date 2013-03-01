@@ -1,5 +1,6 @@
 require 'hashie'
 require 'multi_json'
+require 'nori'
 
 module LinkedIn
   class Mash < ::Hashie::Mash
@@ -8,6 +9,13 @@ module LinkedIn
     def self.from_json(json_string)
       result_hash = ::MultiJson.decode(json_string)
       new(result_hash)
+    end
+
+    def self.from_xml(xml_string)
+      parser = Nori.new
+      result_hash = parser.parse(xml_string)
+      mashie = new(result_hash)
+      return mashie
     end
 
     # returns a Date if we have year, month and day, and no conflicting key

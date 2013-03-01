@@ -43,14 +43,15 @@ module LinkedIn
           # in the HTTP answer (thankfully).
           case response.code.to_i
           when 401
-            data = Mash.from_json(response.body)
-            raise LinkedIn::Errors::UnauthorizedError.new(data), "(#{data.status}): #{data.message}"
+            # FIXME: swithc between from_json and from_xml based on what we are doing.
+            data = Mash.from_xml(response.body)
+            raise LinkedIn::Errors::UnauthorizedError.new(data), "(#{data.error.status}): #{data.error.message}"
           when 400
-            data = Mash.from_json(response.body)
-            raise LinkedIn::Errors::GeneralError.new(data), "(#{data.status}): #{data.message}"
+            data = Mash.from_xml(response.body)
+            raise LinkedIn::Errors::GeneralError.new(data), "(#{data.error.status}): #{data.error.message}"
           when 403
-            data = Mash.from_json(response.body)
-            raise LinkedIn::Errors::AccessDeniedError.new(data), "(#{data.status}): #{data.message}"
+            data = Mash.from_xml(response.body)
+            raise LinkedIn::Errors::AccessDeniedError.new(data), "(#{data.error.status}): #{data.error.message}"
           when 404
             raise LinkedIn::Errors::NotFoundError, "(#{response.code}): #{response.message}"
           when 500
