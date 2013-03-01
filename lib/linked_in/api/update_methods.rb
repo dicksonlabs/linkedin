@@ -3,12 +3,21 @@ module LinkedIn
 
     module UpdateMethods
 
-      # job methods -- job is a hash.
+      # job posting api methods ('job' is a hash.)
+
       def job_post(job_xml)
-        # FIXME: make sure this is getting the v1 bit, as in: http://api.linkedin.com/v1/jobs
         path = "/jobs"
-        post(path, job_xml, {'Content-Type' => 'text/xml', 'x-li-format' => 'xml'})
+        # FIXME: don't hard-code the logfile path
+        open('log/linkedin_job_posting.log', 'a') do |logfile|
+          logfile.puts "\n======= job_post ======"
+          consumer.http.set_debug_output logfile
+          response = post(path, job_xml, {'Content-Type' => 'text/xml', 'x-li-format' => 'xml'})
+        end
+        consumer.http.set_debug_output nil
+        response
       end
+
+      # end job methods
 
       def add_share(share)
         path = "/people/~/shares"
