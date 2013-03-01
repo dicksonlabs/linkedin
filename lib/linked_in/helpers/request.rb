@@ -4,8 +4,7 @@ module LinkedIn
     module Request
 
       DEFAULT_HEADERS = {
-        # FIXME: if we ever want to go upstream, this needs to be paramaterized.
-        # 'x-li-format' => 'json'
+        'x-li-format' => 'json'
       }
 
       API_PATH = '/v1'

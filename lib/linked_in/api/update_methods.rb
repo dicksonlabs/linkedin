@@ -7,7 +7,7 @@ module LinkedIn
       def job_post(job_xml)
         # FIXME: make sure this is getting the v1 bit, as in: http://api.linkedin.com/v1/jobs
         path = "/jobs"
-        post(path, job_xml, 'Content-Type' => 'text/xml')
+        post(path, job_xml, {'Content-Type' => 'text/xml', 'x-li-format' => 'xml'})
       end
 
       def add_share(share)
