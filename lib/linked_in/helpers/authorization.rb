@@ -30,6 +30,10 @@ module LinkedIn
         @auth_token, @auth_secret = access_token.token, access_token.secret
       end
 
+      def access_token=(value)
+        @access_token = value
+      end
+
       def access_token
         @access_token ||= ::OAuth::AccessToken.new(consumer, @auth_token, @auth_secret)
       end
