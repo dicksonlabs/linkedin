@@ -3,13 +3,14 @@ module LinkedIn
     module Logging
 
       def log(&block)
-        open(Rails.root.join('log', 'linkedin_job_posting.log'), 'a') do |logfile|
+        response = nil
+        open(@logfile, 'a') do |logfile|
           consumer.http.set_debug_output logfile
-          logfile.puts "\n======= job_close ======"
-          yield
+          logfile.puts "\n======= #{caller[4][/`.*'/][1..-2]} ======="
+          response = yield
         end
-
         consumer.http.set_debug_output nil
+        response
       end
 
     end

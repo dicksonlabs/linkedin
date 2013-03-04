@@ -11,6 +11,7 @@ module LinkedIn
     include Search
 
     attr_reader :consumer_token, :consumer_secret, :consumer_options
+    attr_accessor :logfile
 
     def initialize(ctoken=LinkedIn.token, csecret=LinkedIn.secret, options={})
       @consumer_token   = ctoken
