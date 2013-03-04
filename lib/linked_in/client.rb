@@ -5,6 +5,7 @@ module LinkedIn
   class Client
     include Helpers::Request
     include Helpers::Authorization
+    include Helpers::Logging
     include Api::QueryMethods
     include Api::UpdateMethods
     include Search

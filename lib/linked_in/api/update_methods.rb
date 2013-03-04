@@ -31,6 +31,15 @@ module LinkedIn
         response
       end
 
+      def job_renew(job_id, job_renew_xml)
+        path = "/jobs/partner-job-id=#{job_id}"
+        response = nil
+        log do
+          response = put(path, job_renew_xml, {'Content-Type' => 'text/xml', 'x-li-format' => 'xml'})
+        end
+        response
+      end
+
       # end job methods
 
       def add_share(share)
