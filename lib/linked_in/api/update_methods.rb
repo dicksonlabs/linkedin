@@ -7,11 +7,25 @@ module LinkedIn
 
       def job_post(job_xml)
         path = "/jobs"
+        response = nil
         # FIXME: don't hard-code the logfile path
-        open('log/linkedin_job_posting.log', 'a') do |logfile|
+        open(Rails.root.join('log', 'linkedin_job_posting.log'), 'a') do |logfile|
           logfile.puts "\n======= job_post ======"
           consumer.http.set_debug_output logfile
           response = post(path, job_xml, {'Content-Type' => 'text/xml', 'x-li-format' => 'xml'})
+        end
+        consumer.http.set_debug_output nil
+        response
+      end
+
+      def job_close(job_id)
+        path = "/jobs/partner-job-id=#{job_id}"
+        response = nil
+        # FIXME: don't hard-code the logfile path
+        open(Rails.root.join('log', 'linkedin_job_posting.log'), 'a') do |logfile|
+          logfile.puts "\n======= job_close ======"
+          consumer.http.set_debug_output logfile
+          response = delete(path, {'Content-Type' => 'text/xml', 'x-li-format' => 'xml'})
         end
         consumer.http.set_debug_output nil
         response
