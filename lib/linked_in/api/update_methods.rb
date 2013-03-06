@@ -26,6 +26,13 @@ module LinkedIn
         end
       end
 
+      def job_edit(job_id, job_edit_xml)
+        path = "/jobs/partner-job-id=#{job_id}"
+        log do
+          put(path, job_edit_xml, {'Content-Type' => 'text/xml', 'x-li-format' => 'xml'})
+        end
+      end
+
       # end job methods
 
       def add_share(share)
